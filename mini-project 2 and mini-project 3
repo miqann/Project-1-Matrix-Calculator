@@ -1,0 +1,107 @@
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#define x 100
+#define y 100
+//Check it is an upper triangular matrix or not
+bool checkUpperTriangularMatrix (int a[x][y],int row)
+{ 
+    for (int i = 1; i < row; i++) 
+        for (int j = 0; j < i; j++) 
+            if (a[i][j] != 0) 
+                return false; 
+    return true; 
+}
+//Check it is a lower triangular matrix or not
+bool checkLowerTriangularMatrix(int a[x][y], int row,int col)
+{
+for (int i = 0; i < row; i++) 
+        for (int j = i + 1; j < col; j++) 
+            if (a[i][j] != 0) 
+                return false; 
+    return true; 
+}
+int main(){
+	int count=0,row=0,col=0,i,j;
+	char name[x],c;
+	char file1[x],file2[x];
+	char *line, *number;
+	int a[x][y];
+	//Open file to read matrix 1 
+	printf("Enter name and location of the file to open:");
+	scanf("%s", file1);
+	FILE*fp=fopen(file1,"r"),*fp2=NULL;
+	if (fp==NULL)
+	{
+		printf("File does not exists\n");
+	}
+	//Open file to print out the matrix to check 
+	printf("Enter name and location of the file to print:");
+	scanf("%s", file2);
+	fp2=fopen(file2,"w");
+	if (fp2==NULL){
+		printf("File does not exists\n");
+	}
+		fscanf(fp,"%[^\n]",name);
+		printf("Name of the matrix is: %s\n",name);
+		fprintf(fp2,"Name of the matrix is: %s\n",name);
+	while((c=fgetc(fp))!= EOF)
+	{
+		if (c=='\n')
+		{
+			row++;
+			printf("\n");
+			fputc(c,fp2);
+		}
+		else if(c==',')
+		{
+			count++;
+			printf("\t");
+			fprintf(fp2,"\t");
+		}
+		else if (c<='9'&&c>='0'){
+			printf("%c",c);
+			fprintf(fp2,"%c",c);
+		}
+	}
+	row=row-1;
+	col=count/(row-1);
+	printf("\nNumber of rows: %d, number of column: %d",row,col);
+	fclose(fp);
+	fclose(fp2);
+	printf("\n\n");
+	printf("Check whether it is an upper triangular matrix or It is a lower triangular matrix.\n ");
+	fp2=fopen(file2,"r");
+	if (fp2==NULL)
+	{
+			printf("File doesn not exists");
+	}
+	fscanf(fp2,"%[^\n]",name);
+	printf("%s",name);
+	printf("\n\n");
+	while(!feof(fp2))
+	{
+	for (i=0;i<row;i++){
+		for(j=0;j<col;j++){
+			fscanf(fp2,"%d",&a[i][j]);
+		}
+	}
+	}
+   for (int i = 0; i < row; i++) {
+        for (int j = 0; j < col; j++) {
+            printf("%5d\t", a[i][j]);
+        }
+        printf("\n");
+    }
+    if (checkUpperTriangularMatrix(a,row))
+    printf("\nIt is an upper triangular matrix.");
+    else
+    printf("\nIt is not an upper triangular matrix.");
+    if (checkLowerTriangularMatrix(a,row,col))
+    printf("\nIt is a lower triangular matrix.");
+    else
+    printf("\nIt is not a lower triangular matrix.");
+    fclose(fp2);
+    return 0;
+}
+
