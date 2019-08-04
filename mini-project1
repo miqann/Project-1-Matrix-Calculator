@@ -1,0 +1,43 @@
+#include <stdio.h>
+
+bool checkdiagonal(int a[][100], int n)
+{
+	int i, j;
+	for (i=0; i<n; i++)
+	{
+		for (j=0; j<n; j++)
+		{
+			if (i!=j && a[i][j]!=0) return false;
+		}
+	}
+	return true;
+}
+
+int main() {
+    int a[100][100];
+    int n;
+
+    FILE *f = fopen("Project1.txt", "r");
+
+    fscanf(f, "%d", &n);
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            fscanf(f, "%d", &a[i][j]);
+        }
+    }
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%d\t", a[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+    
+    if (checkdiagonal(a, n))
+    {
+    	printf("This is diagonal matrix!");
+	}
+    else printf("This is not diagonal matrix!");
+}
