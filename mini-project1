@@ -36,8 +36,6 @@ int main() {
     printf("\n");
     
     if (checkdiagonal(a, n))
-    {
-    	printf("This is diagonal matrix!");
-	}
+    printf("This is diagonal matrix!");	
     else printf("This is not diagonal matrix!");
 }
